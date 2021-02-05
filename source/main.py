@@ -38,7 +38,7 @@ if __name__ == '__main__':
     z.extractall('')
     
     
-    with open(‘addresses.csv’, ‘r’) as file:
+    with open('addresses.csv', 'r') as file:
     reader = csv.reader(file)
     for row in reader:
         print(row)
