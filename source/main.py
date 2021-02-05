@@ -1,4 +1,3 @@
-import logging
 import os
 
 from awsS3Io import AwsS3Io
@@ -16,12 +15,15 @@ if __name__ == '__main__':
 
 
     # Start process
-    logging.info("Starting ZiptoCatalog")
+    print("Starting ZiptoCatalog")
     name = os.getenv('MY_BUCKET')
     value = os.getenv('MY_KEY')
 
 
-    logging.info(name)
-    logging.info(value)
+    print(name)
+    print(value)
 
-    logging.info("Completed run...")
+
+
+
+    print("Completed run...")
