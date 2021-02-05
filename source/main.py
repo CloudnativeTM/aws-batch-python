@@ -42,14 +42,11 @@ if __name__ == '__main__':
     with open('products.csv', 'r') as csvFile:
         reader = csv.DictReader(csvFile)
         for rows in reader:
-            id = rows['id']
-            data[id] = rows
+            productname = rows['productName']
+            print(productname)
 
 
-    with open('products2.json', 'w') as jsonFile:
-        jsonFile.write(json.dumps(data, indent=4))
-
-    print(jsonFile)
+    
 
     
     print("Completed run...")
