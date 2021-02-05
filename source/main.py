@@ -46,7 +46,7 @@ if __name__ == '__main__':
             data[id] = row
 
 
-    with open('products2.json', 'w') as jsonFile
+    with open('products2.json', 'w') as jsonFile:
         jsonFile.write(json.dumps(data, indent=4))
 
     print(jsonFile)
