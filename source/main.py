@@ -3,6 +3,7 @@ import boto3
 import zipfile
 import io
 import csv
+import json
 
 
 
@@ -31,20 +32,24 @@ if __name__ == '__main__':
     z = zipfile.ZipFile(buffer)
 
     
-
-
     for filename in z.namelist():
         print(z.getinfo(filename))
     
     z.extractall('')
     
     
-    with open('addresses.csv', 'r') as file:
-        reader = csv.reader(file)
+    data={}
+    with open('products.csv', 'r') as csvFile:
+        reader = csv.DictReader(file,csvFile)
         for row in reader:
-            print(row)
- 
+            id = rows['id']
+            data[id] = row
 
 
+    with open('products2.json', 'w') as jsonFile
+        jsonFile.write(json.dumps(data, indent=4))
 
+    print(jsonFile)
+
+    
     print("Completed run...")
