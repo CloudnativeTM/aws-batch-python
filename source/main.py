@@ -18,7 +18,7 @@ if __name__ == '__main__':
     # Start process
     logging.info("Starting ZiptoCatalog")
     name = os.getenv('MY_BUCKET')
-    value = os.egetenv('MY_KEY')
+    value = os.getenv('MY_KEY')
 
 
     logging.info(name)
