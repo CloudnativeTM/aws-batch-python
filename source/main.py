@@ -1,7 +1,7 @@
 import os
 import boto3
 import zipfile
-import BytesIO
+import io
 
 
 
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     zip_obj = s3.Object(bucket, key)
 
 
-    buffer = BytesIO(zip_obj.get()["Body"].read())
+    buffer = io.BytesIO(zip_obj.get()["Body"].read())
 
     z = zipfile.ZipFile(buffer)
     for filename in z.namelist():
