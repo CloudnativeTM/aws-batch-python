@@ -43,6 +43,7 @@ if __name__ == '__main__':
         reader = csv.DictReader(csvFile)
         for rows in reader:
             print(rows)
+            print(rows['sku'])
 
 
     
