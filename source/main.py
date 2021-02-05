@@ -39,9 +39,9 @@ if __name__ == '__main__':
     
     
     with open('addresses.csv', 'r') as file:
-    reader = csv.reader(file)
-    for row in reader:
-        print(row)
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
  
 
 
