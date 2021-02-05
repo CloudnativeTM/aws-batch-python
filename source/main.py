@@ -1,14 +1,14 @@
 import os
+import boto3
+import zipfile
+import io
+import csv
 
 from awsS3Io import AwsS3Io
 from sampleProcess import SampleProcess
 
 
-def run(output_dir, s3destination):
-    downloaded_file = SampleProcess().run(output_dir)
-    # If s3 uri is present upload to s3
-    if s3destination is not None:
-        AwsS3Io().uploadfile(downloaded_file, s3destination)
+
 
 
 if __name__ == '__main__':
@@ -16,13 +16,29 @@ if __name__ == '__main__':
 
     # Start process
     print("Starting ZiptoCatalog")
-    name = os.getenv('MY_BUCKET')
-    value = os.getenv('MY_KEY')
+    bucket = os.getenv('MY_BUCKET')
+    key = os.getenv('MY_KEY')
 
 
-    print(name)
-    print(value)
+    print(bucket)
+    print(key)
 
+    s3 = boto3.resource('s3')
+    obj = s3.Object(bucket, key)
+
+    with io.BytesIO(obj.get()["Body"].read()) as tf:
+
+    # rewind the file
+    tf.seek(0)
+
+    # Read the file as a zipfile and process the members
+    with zipfile.ZipFile(tf, mode='r') as zipf:
+        zip_ref.extractall('')
+
+    with open('addresses.csv', 'r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
 
 
 
