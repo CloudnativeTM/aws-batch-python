@@ -24,16 +24,13 @@ if __name__ == '__main__':
     print(key)
 
     s3 = boto3.resource('s3')
-    obj = s3.Object(bucket, key)
+    zip_obj = s3.Object(bucket, key)
 
-    with io.BytesIO(obj.get()["Body"].read()) as tf:
 
-    # rewind the file
-    tf.seek(0)
+    buffer = BytesIO(zip_obj.get()["Body"].read())
 
-    # Read the file as a zipfile and process the members
-    with zipfile.ZipFile(tf, mode='r') as zipf:
-        zip_ref.extractall('')
+    z = zipfile.ZipFile(buffer)
+    z.extractall('')
 
     with open('addresses.csv', 'r') as file:
     reader = csv.reader(file)
