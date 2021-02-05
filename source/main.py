@@ -33,6 +33,6 @@ if __name__ == '__main__':
     # Start process
     logger.info("Starting run with arguments...\n{}".format(args.__dict__))
 
-    run(args.output_dir, args.s3uri)
+    #run(args.output_dir, args.s3uri)
 
     logger.info("Completed run...")
