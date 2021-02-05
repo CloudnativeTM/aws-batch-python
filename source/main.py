@@ -40,10 +40,10 @@ if __name__ == '__main__':
     
     data={}
     with open('products.csv', 'r') as csvFile:
-        reader = csv.DictReader(file,csvFile)
-        for row in reader:
+        reader = csv.DictReader(csvFile)
+        for rows in reader:
             id = rows['id']
-            data[id] = row
+            data[id] = rows
 
 
     with open('products2.json', 'w') as jsonFile:
