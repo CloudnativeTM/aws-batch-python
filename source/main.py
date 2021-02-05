@@ -42,7 +42,7 @@ if __name__ == '__main__':
     with open('products.csv', 'r') as csvFile:
         reader = csv.DictReader(csvFile)
         for rows in reader:
-            print(row)
+            print(rows)
 
 
     
