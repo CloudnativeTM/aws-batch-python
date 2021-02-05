@@ -15,13 +15,10 @@ def run(output_dir, s3destination):
 
 if __name__ == '__main__':
 
-    # Set up logging
-    logging.basicConfig(level=logging.getLevelName(args.log_level), handlers=[logging.StreamHandler(sys.stdout)],
-                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    logger = logging.getLogger(__name__)
+
 
     # Start process
-    logger.info("Starting run with arguments...")
+    logger.info("Starting ZiptoCatalog")
     name = os.getenv('MY_BUCKET')
     value = os.egetenv('MY_KEY')
 
