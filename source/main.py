@@ -67,17 +67,18 @@ if __name__ == '__main__':
             try:
                 response = s3_client.upload_file(
                     rows['image'], "productimagesportle", "public/"+rows['image'])
-                productId = uuid.uuid4()
+
+                productId = str(uuid.uuid4())
 
                 table.put_item(
                     Item={
-                        'usderId': userId,
+                        'userId': userId,
                         'productId': productId,
                         'productName': rows['productName'],
                         'productDescription': rows['productDescription'],
                         'productPrize': rows['productPrize'],
                         'sku': rows['sku'],
-                        'image': rows['image']
+                        'image': rows['image']",
 
                     }
                 )
