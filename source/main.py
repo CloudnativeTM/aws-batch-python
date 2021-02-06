@@ -14,7 +14,7 @@ if __name__ == '__main__':
     key = os.getenv('MY_KEY')
     s3 = boto3.resource('s3')
     s3_client = boto3.client('s3')
-    dynamodb = boto3.ressource('dynamodb')
+    dynamodb = boto3.client('dynamodb')
 
     print(bucket)
     print(key)
