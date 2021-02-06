@@ -78,7 +78,7 @@ if __name__ == '__main__':
                         'productDescription': rows['productDescription'],
                         'productPrize': rows['productPrize'],
                         'sku': rows['sku'],
-                        'image': rows['image']",
+                        'image': rows['image'],
 
                     }
                 )
