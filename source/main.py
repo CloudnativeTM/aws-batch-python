@@ -4,9 +4,9 @@ import zipfile
 import io
 import csv
 from botocore.exceptions import ClientError
+import uuid
 
 if __name__ == '__main__':
-
 
     # Start process
     print("Starting ZiptoCatalog")
@@ -19,25 +19,21 @@ if __name__ == '__main__':
     print(bucket)
     print(key)
 
-
     print(key.split('.')[0])
     userId = key.split('.')[0]
-
-    
 
     zip_obj = s3.Object(bucket, key)
     buffer = io.BytesIO(zip_obj.get()["Body"].read())
     z = zipfile.ZipFile(buffer)
 
-    
     for filename in z.namelist():
         print(z.getinfo(filename))
-    
+
     z.extractall('')
 
-    #test files, check csv, format testing, ; --> , 
+    # test files, check csv, format testing, ; --> ,
 
-    #get id out of csv name and delete all data in dynamoDB
+    # get id out of csv name and delete all data in dynamoDB
     table = dynamodb.Table('products')
     scan = None
     with table.batch_writer() as batch:
@@ -50,17 +46,16 @@ if __name__ == '__main__':
             else:
                 scan = table.scan(
                     ProjectionExpression='userId,productId',
-                    
+
                 )
 
             for item in scan['Items']:
                 print(item['userId'])
                 if item['userId'] == userId:
                     batch.delete_item(Key={
-                        'userId' : userId,
-                        'productId' : item['productId']
+                        'userId': userId,
+                        'productId': item['productId']
                     })
-
 
     with open('products.csv') as csvFile:
         reader = csv.DictReader(csvFile)
@@ -70,16 +65,26 @@ if __name__ == '__main__':
             print(rows['sku'])
 
             try:
-                response = s3_client.upload_file(rows['image'], "productimagesportle", "public/"+rows['image'])
-                
+                response = s3_client.upload_file(
+                    rows['image'], "productimagesportle", "public/"+rows['image'])
+                productId = uuid.uuid4()
 
-                #Post dynamo Object with userId
+                table.put_item(
+                    Item={
+                        'usderId': userId,
+                        'productId': productId,
+                        'productName': rows['productName'],
+                        'productDescription': rows['productDescription'],
+                        'productPrize': rows['productPrize'],
+                        'sku': rows['sku'],
+                        'image': rows['image']
 
+                    }
+                )
 
-
+                # Post dynamo Object with userId
 
             except ClientError as er:
                 print(er)
-                
-    
+
     print("Completed run...")
