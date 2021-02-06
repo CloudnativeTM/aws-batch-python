@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     #get id out of csv name and delete all data in dynamoDB
     table = dynamodb.Table('products')
-    with table.batch_writer() as scan:
+    with table.batch_writer() as batch:
         while scan is None or 'LastEvaluatedKey' in scan:
             if scan is not None and 'LastEvaluatedKey' in scan:
                 scan = table.scan(
@@ -48,10 +48,9 @@ if __name__ == '__main__':
                 )
             else:
                 scan = table.scan(ProjectionExpression='userId')
+
             for item in scan['Items']:
-                batch.delete_item(Key={
-                    'userId' : item[userId]
-                })
+                batch.delete_item(Key={'userId' : item[userId]})
 
 
     with open('products.csv') as csvFile:
