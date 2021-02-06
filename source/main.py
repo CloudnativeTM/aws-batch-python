@@ -54,7 +54,6 @@ if __name__ == '__main__':
                 batch.delete_item(Key={
                     'userId' : userId,
                     'productId' : item['productId'] 
-                    
                     })
 
 
