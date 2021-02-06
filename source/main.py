@@ -3,6 +3,7 @@ import boto3
 import zipfile
 import io
 import csv
+from botocore.exceptions import ClientError
 
 
 
@@ -50,7 +51,7 @@ if __name__ == '__main__':
             try:
                 response = s3_client.upload_file(rows['image'], "productimagesportle", "public/"+rows['image'])
                 
-            except botocore.exceptions.ClientError as er:
+            except ClientError as er:
                 print(er)
                 
         
