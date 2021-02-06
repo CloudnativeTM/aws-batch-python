@@ -52,8 +52,7 @@ if __name__ == '__main__':
 
             for item in scan['Items']:
                 batch.delete_item(Key={
-                    'userId' : userId,
-                    'productId' : item['productId'] 
+                    'userId' : userId
                     })
 
 
