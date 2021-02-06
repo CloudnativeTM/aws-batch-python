@@ -51,7 +51,11 @@ if __name__ == '__main__':
                 scan = table.scan(ProjectionExpression='userId')
 
             for item in scan['Items']:
-                batch.delete_item(Key={'userId' : item[userId]})
+                batch.delete_item(Key={
+                    'userId' : userId,
+                    'productId' : item['productId'] 
+                    
+                    })
 
 
     with open('products.csv') as csvFile:
