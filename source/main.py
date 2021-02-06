@@ -44,15 +44,21 @@ if __name__ == '__main__':
         while scan is None or 'LastEvaluatedKey' in scan:
             if scan is not None and 'LastEvaluatedKey' in scan:
                 scan = table.scan(
-                    ProjectionExpression='userId',
-                    ExclusiveStartKey=scan['LastEvaluatedKey'],  
+                    ProjectionExpression='userId,productId',
+                    ExclusiveStartKey=scan['LastEvaluatedKey'],
                 )
             else:
-                scan = table.scan(ProjectionExpression='userId')
+                scan = table.scan(
+                    ProjectionExpression='userId,productId',
+                    
+                )
 
             for item in scan['Items']:
-                batch.delete_item(Key={
-                    'userId' : userId
+                print(item['userId'])
+                if item['userId'] == userId:
+                    batch.delete_item(Key={
+                        'userId' : userId,
+                        'productId' : item['productId']
                     })
 
 
