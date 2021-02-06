@@ -5,13 +5,6 @@ import io
 import csv
 from botocore.exceptions import ClientError
 
-
-
-
-
-
-
-
 if __name__ == '__main__':
 
 
@@ -19,17 +12,21 @@ if __name__ == '__main__':
     print("Starting ZiptoCatalog")
     bucket = os.getenv('MY_BUCKET')
     key = os.getenv('MY_KEY')
-
+    s3 = boto3.resource('s3')
+    s3_client = boto3.client('s3')
+    dynamodb = boto3.ressource('dynamodb')
 
     print(bucket)
     print(key)
 
-    s3 = boto3.resource('s3')
+
+    print(key.split('.')[0])
+    userId = key.split('.')[0]
+
+    
+
     zip_obj = s3.Object(bucket, key)
-
-
     buffer = io.BytesIO(zip_obj.get()["Body"].read())
-
     z = zipfile.ZipFile(buffer)
 
     
@@ -37,9 +34,25 @@ if __name__ == '__main__':
         print(z.getinfo(filename))
     
     z.extractall('')
-    
-    
-    s3_client = boto3.client('s3')
+
+    #test files, check csv, format testing, ; --> , 
+
+    #get id out of csv name and delete all data in dynamoDB
+    table = dynamodb.Table('products')
+    with table.batch_writer() as batch:
+        while scan is None or 'LastEvaluatedKey' in Scan:
+            if scan is not None and 'LastEvaluatedKey' in Scan:
+                scan = table.scan(
+                    ProjectionExpression='userId',
+                    ExclusiveStartKey=scan['LastEvaluatedKey'],  
+                )
+            else:
+                scan = table.scan(ProjectionExpression='userId')
+            for item in scan['Items']:
+                batch.delete_item(Key={
+                    'userId' : item[userId]
+                })
+
 
     with open('products.csv') as csvFile:
         reader = csv.DictReader(csvFile)
@@ -50,7 +63,9 @@ if __name__ == '__main__':
 
             try:
                 response = s3_client.upload_file(rows['image'], "productimagesportle", "public/"+rows['image'])
-                print(response)
+                
+
+                #Post dynamo Object with userId
 
 
 
