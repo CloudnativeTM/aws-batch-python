@@ -50,8 +50,9 @@ if __name__ == '__main__':
             try:
                 response = s3_client.upload_file(rows['image'], "productimagesportle", "public/"+rows['image'])
                 
-            except ClientError as e:
-                logging.error(e)
+            except botocore.exceptions.ClientError as er:
+                print(er)
+                
         
 
 
