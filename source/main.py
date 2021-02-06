@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     #get id out of csv name and delete all data in dynamoDB
     table = dynamodb.Table('products')
-    with table.batch_writer() as batch:
+    with table.batch_writer() as scan:
         while scan is None or 'LastEvaluatedKey' in scan:
             if scan is not None and 'LastEvaluatedKey' in scan:
                 scan = table.scan(
