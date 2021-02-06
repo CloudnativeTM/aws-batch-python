@@ -50,15 +50,13 @@ if __name__ == '__main__':
 
             try:
                 response = s3_client.upload_file(rows['image'], "productimagesportle", "public/"+rows['image'])
-                
+                print(response)
+
+
+
+
             except ClientError as er:
                 print(er)
                 
-        
-
-
-
-    
-
     
     print("Completed run...")
