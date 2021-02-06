@@ -38,12 +38,22 @@ if __name__ == '__main__':
     z.extractall('')
     
     
-    data={}
-    with open('products.csv', 'r') as csvFile:
+    s3_client = boto3.client('s3')
+
+    with open('products.csv') as csvFile:
         reader = csv.DictReader(csvFile)
         for rows in reader:
             print(rows)
+            print('productName')
             print(rows['sku'])
+
+            try:
+                response = s3_client.upload_file(rows['image'], "productimagesportle", "public/"+rows['image'])
+                
+            except ClientError as e:
+                logging.error(e)
+        
+
 
 
     
