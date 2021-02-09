@@ -76,6 +76,8 @@ if __name__ == '__main__':
                         'productId': productId,
                         'productName': rows['productName'],
                         'productDescription': rows['productDescription'],
+                        'productVariation' : rows['productVariation'],
+                        'productSpecs' : rows['productSpecs'],
                         'productPrize': rows['productPrize'],
                         'sku': rows['sku'],
                         'image': rows['image'],
